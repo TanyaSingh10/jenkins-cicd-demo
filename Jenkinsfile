@@ -1,34 +1,27 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10'
+        }
+    }
 
     stages {
         stage('Build') {
             steps {
-                echo 'Building the project...'
-            }
-        }
-
-        stage('Setup Environment') {
-            steps {
-                echo 'Installing Python...'
-                sh '''
-                    sudo apt-get update -y || apt-get update -y
-                    sudo apt-get install -y python3 || apt-get install -y python3
-                '''
-                sh 'python3 --version'
+                echo 'Building project...'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                echo 'Running Python script...'
                 sh 'python3 hello.py'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
+                echo 'Deployment successful!'
             }
         }
     }
